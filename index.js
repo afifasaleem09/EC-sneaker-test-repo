@@ -1,22 +1,21 @@
-/*
- ** Author: Santosh Kumar Dash
- ** Author URL: http://santoshdash.epizy.com/
- ** Github URL: https://github.com/quintuslabs/fashion-cube
- */
+import React from "react";
+import ReactDOM from "react-dom";
 
-export const DEFAULT_RULE = {
-  isRequired: true
-};
-export const NAME_RULE = {
-  isRequired: true,
-  minLength: 3
-};
-export const PHONE_RULE = {
-  isRequired: true,
-  maxLength: 15,
-  minLength: 10
-};
-export const EMAIL_RULE = {
-  isRequired: true,
-  isEmail: true
-};
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
