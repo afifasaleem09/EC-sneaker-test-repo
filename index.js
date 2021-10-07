@@ -4,21 +4,18 @@
  ** Github URL: https://github.com/quintuslabs/fashion-cube
  */
 
-import { combineReducers } from "redux";
-import login from "./LoginReducer";
-import register from "./RegisterReducer";
-import department from "./DepartmentReducer";
-import product from "./productReducer";
-import variant from "./variantsReducer";
-import cart from "./cartReducer";
-// import checkout from './checkoutReducer'
-// import filter from './filterReducer'
+import rootReducer from "../reducers";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
 
-export default combineReducers({
-  department,
-  login,
-  register,
-  product,
-  variant,
-  cart
-});
+const initialState = {};
+const middlewares = [thunk];
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  rootReducer,
+  initialState,
+  composeEnhancers(applyMiddleware(...middlewares))
+);
+
+export default store;
