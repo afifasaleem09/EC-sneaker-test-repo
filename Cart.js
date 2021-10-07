@@ -1,85 +1,67 @@
-/*
- ** Author: Santosh Kumar Dash
- ** Author URL: http://santoshdash.epizy.com/
- ** Github URL: https://github.com/quintuslabs/fashion-cube
- */
+const cartModel = require('../models/Cart')
 
-import React, { Component } from "react";
-import Heading from "../../components/Heading";
-import CartItem from "./CartItem";
-import { Button } from "react-bootstrap";
-import CalculateTax from "../../utils/CalculateTax";
-import EmptyCart from "../../assets/images/empty_cart.png";
-
-class Cart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+class Cart {
+  constructor(oldCart) {
+    this.items = oldCart.items || {};
+    this.totalQty = oldCart.totalQty || 0;
+    this.totalPrice = oldCart.totalPrice || 0;
+    this.userId = oldCart.userId || "";
   }
-  render() {
-    const { totalPrice, items } = this.props.cart;
-    const { postCart } = this.props;
-    return (
-      <div className="shopping--cart" data-aos="fade-up">
-        <div className="container">
-          <div className="shopping--cart--container">
-            <div className="row ">
-              <Heading title="Your Shopping Cart" data-aos="fade-up" />
-            </div>
-            <div style={{ height: 30 }}></div>
-            <CartItem
-              items={items || {}}
-              handleClick={(pid, increase, decrease) =>
-                postCart(pid, increase, decrease)
-              }
-            />
-            {items !== undefined && items !== null ? (
-              <div
-                className="d-flex flex-column justify-content-end align-items-end"
-                style={{ paddingRight: 50 }}
-              >
-                <p>
-                  SubTotal :{" "}
-                  <span style={{ color: "#FE4C50" }}>₹{totalPrice}</span>
-                </p>
-                <p>
-                  Shipping : <span style={{ color: "#FE4C50" }}>Free</span>
-                </p>
 
-                <p>
-                  Taxes :{" "}
-                  <span style={{ color: "#FE4C50" }}>
-                    ₹ {CalculateTax(totalPrice).taxes}
-                  </span>
-                </p>
+  add(item, id) {
+    let storedItem = this.items[id];
+    if (!storedItem) {
+      storedItem = this.items[id] = { item: item, qty: 0, price: 0 };
+    }
+    storedItem.qty++;
+    storedItem.price = parseFloat((storedItem.item.price * storedItem.qty).toFixed(2));
+    this.items[id]=storedItem
+    this.totalQty++;
+    this.totalPrice += storedItem.item.price;
+    this.totalPrice = parseFloat(this.totalPrice.toFixed(2))
+    return this
+  }
 
-                <h3 style={{ textAlign: "center" }}>
-                  Total:{" "}
-                  <span style={{ color: "#FE4C50" }}>
-                    ₹ {CalculateTax(totalPrice).total}
-                  </span>
-                </h3>
-                <hr />
+  generateModel(){
+    let newCart = new cartModel({
+      items: this.items,
+      totalQty: this.totalQty,
+      totalPrice: this.totalPrice,
+      userId: this.userId
+    })
+    return newCart
+  }
 
-                <Button variant="danger" size="sm" style={{ marginTop: 30 }}>
-                  Confirm Checkout
-                </Button>
-              </div>
-            ) : (
-              <div style={{ textAlign: "center" }}>
-                <img
-                  src={EmptyCart}
-                  alt=""
-                  style={{ maxHeight: 400, maxWidth: 400 }}
-                  className="img-fluid"
-                />
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
+  decreaseQty(id) {
+    this.items[id].qty--;
+    this.items[id].price -= this.items[id].item.price;
+    this.items[id].price = parseFloat(this.items[id].price.toFixed(2))
+    this.totalQty--;
+    this.totalPrice -= this.items[id].item.price
+    this.totalPrice = parseFloat(this.totalPrice.toFixed(2))
+    if (this.items[id].qty <= 0) {
+      delete this.items[id];
+    }
+    return this
+  }
+
+  increaseQty(id) {
+    this.items[id].qty++;
+    this.items[id].price += this.items[id].item.price;
+    this.items[id].price = parseFloat(this.items[id].price.toFixed(2))
+    this.totalQty++;
+    this.totalPrice += this.items[id].item.price
+    this.totalPrice = parseFloat(this.totalPrice.toFixed(2))
+    return this
+  }
+
+  generateArray() {
+    let arr = [];
+    for (let id in this.items) {
+      arr.push(this.items[id])
+    }
+    return arr;
   }
 }
 
-export default Cart;
+module.exports = Cart
