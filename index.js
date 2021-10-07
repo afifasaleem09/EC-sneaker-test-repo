@@ -4,27 +4,39 @@
  ** Github URL: https://github.com/quintuslabs/fashion-cube
  */
 
-class Auth {
-  constructor() {
-    this.user_token = JSON.parse(localStorage.getItem("auth")) || {};
-  }
-  getToken() {
-    return this.user_token.token;
-  }
-  getUserId() {
-    return this.user_token.user_id;
-  }
+export const size = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "425px",
+  tablet: "768px",
+  tabletL: "991px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+const device = {
+  min: {
+    mobileS: `(min-width: ${size.mobileS})`,
+    mobileM: `(min-width: ${size.mobileM})`,
+    mobileL: `(min-width: ${size.mobileL})`,
+    tablet: `(min-width: ${size.tablet})`,
+    tabletL: `(min-width: ${size.tabletL})`,
+    laptop: `(min-width: ${size.laptop})`,
+    laptopL: `(min-width: ${size.laptopL})`,
+    desktop: `(min-width: ${size.desktop})`,
+    desktopL: `(min-width: ${size.desktop})`,
+  },
+  max: {
+    mobileS: `(max-width: ${size.mobileS})`,
+    mobileM: `(max-width: ${size.mobileM})`,
+    mobileL: `(max-width: ${size.mobileL})`,
+    tablet: `(max-width: ${size.tablet})`,
+    tabletL: `(max-width: ${size.tabletL})`,
+    laptop: `(max-width: ${size.laptop})`,
+    laptopL: `(max-width: ${size.laptopL})`,
+    desktop: `(max-width: ${size.desktop})`,
+    desktopL: `(max-width: ${size.desktop})`,
+  },
+};
 
-  getUserDetails() {
-    return this.user_token;
-  }
-
-  setUserToken(new_token) {
-    this.user_token = new_token;
-    localStorage.setItem("auth", JSON.stringify(new_token));
-  }
-  logout() {
-    localStorage.removeItem("auth");
-  }
-}
-export default new Auth();
+export default device;
