@@ -4,15 +4,21 @@
  ** Github URL: https://github.com/quintuslabs/fashion-cube
  */
 
-let history;
-export const registerNav = ref => {
-  history = ref.history;
-};
+import { combineReducers } from "redux";
+import login from "./LoginReducer";
+import register from "./RegisterReducer";
+import department from "./DepartmentReducer";
+import product from "./productReducer";
+import variant from "./variantsReducer";
+import cart from "./cartReducer";
+// import checkout from './checkoutReducer'
+// import filter from './filterReducer'
 
-const jumpTo = uri => {
-  history.push(uri);
-};
-export const go = uri => {
-  history.go(uri);
-};
-export default jumpTo;
+export default combineReducers({
+  department,
+  login,
+  register,
+  product,
+  variant,
+  cart
+});
