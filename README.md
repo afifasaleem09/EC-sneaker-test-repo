@@ -1,25 +1,25 @@
-# EC-sneaker-test-repo
-**Fashion Cube-Ecommerce Application**  
-#General Info 
+# EC-sneaker-test-repo      
+**Fashion Cube-Ecommerce Application**       
+#General Info     
+   
+front-end: Reactjs, Redux, Axios, Sass, react-bootstrap      
 
-front-end: Reactjs, Redux, Axios, Sass, react-bootstrap
-
-Live Demo
+Live Demo      
 
 **This project is created using:**  
  Monorepo
  Lerna
  Design System
  Hooks
- Redux
+ Redux                 
 **Future Features**  
 Home (List products)
 Detail products
 Product category
 Recommended products
 Cart
-Login / Register
-
+Login / Register              
+ 
 **ScreenShot**
 ![screen1](https://user-images.githubusercontent.com/90034557/136385895-8522d4f5-3fca-4f30-8bd4-200fe3fdd322.png)
 ![screen2](https://user-images.githubusercontent.com/90034557/136386045-dea603e5-43ca-4a29-9762-4c56a863c881.png)
